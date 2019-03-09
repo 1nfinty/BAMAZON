@@ -18,5 +18,7 @@ cd BAMAZON
 npm install
 node bamazonCustomer.js
 
+*Note* Include your MySql password when creating connection to your database.
+
 
 
