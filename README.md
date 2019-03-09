@@ -18,5 +18,5 @@ cd BAMAZON
 npm install
 node bamazonCustomer.js
 
-No
+
 
