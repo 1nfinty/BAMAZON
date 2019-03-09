@@ -2,7 +2,7 @@
 var inquirer = require('inquirer');
 var mysql = require('mysql');
 
-// Define the MySQL connection parameters
+//  MySQL connection 
 var connection = mysql.createConnection({
 	host: 'localhost',
 	port: 3306,
@@ -11,11 +11,11 @@ var connection = mysql.createConnection({
 	user: 'root',
 
 	// Your password
-	password: '',
+	password: 'nava2018',
 	database: 'Bamazon'
 });
 
-// validateInput makes sure that the user is supplying only positive integers for their inputs
+// makes sure that user is supplying only positive integers for their inputs
 function validateInput(value) {
 	var integer = Number.isInteger(parseFloat(value));
 	var sign = Math.sign(value);
@@ -27,9 +27,8 @@ function validateInput(value) {
 	}
 }
 
-// promptUserPurchase will prompt the user for the item/quantity they would like to purchase
+// prompts user for the item/quantity they want to purchase
 function promptUserPurchase() {
-	// console.log('___ENTER promptUserPurchase___');
 
 	// Prompt the user to select an item
 	inquirer.prompt([
@@ -48,8 +47,7 @@ function promptUserPurchase() {
 			filter: Number
 		}
 	]).then(function(input) {
-		// console.log('Customer has selected: \n    item_id = '  + input.item_id + '\n    quantity = ' + input.quantity);
-
+	
 		var item = input.item_id;
 		var quantity = input.quantity;
 
@@ -59,7 +57,7 @@ function promptUserPurchase() {
 		connection.query(queryStr, {item_id: item}, function(err, data) {
 			if (err) throw err;
 
-			// If the user has selected an invalid item ID, data attay will be empty
+			// If the user has selected an invalid item ID, data arryay will be empty
 			// console.log('data = ' + JSON.stringify(data));
 
 			if (data.length === 0) {
@@ -74,7 +72,7 @@ function promptUserPurchase() {
 
 				// If the quantity requested by the user is in stock
 				if (quantity <= productData.stock_quantity) {
-					console.log('Congratulations, the product you requested is in stock! Placing order!');
+					console.log('The product you requested is in stock! Placing order!');
 
 					// Construct the updating query string
 					var updateQueryStr = 'UPDATE products SET stock_quantity = ' + (productData.stock_quantity - quantity) + ' WHERE item_id = ' + item;
