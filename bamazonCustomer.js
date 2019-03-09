@@ -56,20 +56,14 @@ function promptUserPurchase() {
 
 		connection.query(queryStr, {item_id: item}, function(err, data) {
 			if (err) throw err;
-
-			// If the user has selected an invalid item ID, data arryay will be empty
-			// console.log('data = ' + JSON.stringify(data));
-
+			// If the user has selected an invalid item ID, data array will be empty
 			if (data.length === 0) {
 				console.log('ERROR: Invalid Item ID. Please select a valid Item ID.');
 				displayInventory();
 
 			} else {
 				var productData = data[0];
-
-				// console.log('productData = ' + JSON.stringify(productData));
-				// console.log('productData.stock_quantity = ' + productData.stock_quantity);
-
+				//console.log(productData);
 				// If the quantity requested by the user is in stock
 				if (quantity <= productData.stock_quantity) {
 					console.log('The product you requested is in stock! Placing order!');
@@ -83,7 +77,7 @@ function promptUserPurchase() {
 						if (err) throw err;
 
 						console.log('Your oder has been placed! Your total is $' + productData.price * quantity);
-						console.log('Thank you for shopping with us!');
+						console.log('Thank you for shopping at Bamazon!');
 						console.log("\n---------------------------------------------------------------------\n");
 
 						// End the database connection
@@ -103,7 +97,6 @@ function promptUserPurchase() {
 
 // displayInventory will retrieve the current inventory from the database and output it to the console
 function displayInventory() {
-	// console.log('___ENTER displayInventory___');
 
 	// Construct the db query string
 	queryStr = 'SELECT * FROM products';
@@ -128,12 +121,12 @@ function displayInventory() {
 
 	  	console.log("---------------------------------------------------------------------\n");
 
-	  	//Prompt the user for item/quantity they would like to purchase
+	  	//Prompt user for item/quantity they would like to purchase
 	  	promptUserPurchase();
 	})
 }
 
-// runBamazon will execute the main application logic
+// runBamazon executes the main app logic
 function runBamazon() {
 	// console.log('___ENTER runBamazon___');
 
@@ -141,5 +134,5 @@ function runBamazon() {
 	displayInventory();
 }
 
-// Run the application logic
+// run the app logic
 runBamazon();
